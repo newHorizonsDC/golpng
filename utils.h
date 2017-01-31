@@ -3,7 +3,7 @@
 #include <iostream>
 
 template<typename Lambda>
-int show(const std::string& caption, const unsigned char* rgba, unsigned w, unsigned h, Lambda&& action)
+int show(const std::string& caption, unsigned char* rgba, unsigned w, unsigned h, Lambda&& action)
 {
   //init SDL
   if(SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -40,7 +40,17 @@ int show(const std::string& caption, const unsigned char* rgba, unsigned w, unsi
     *bufp = 65536 * r + 256 * g + b;
   }
 
-  int done = std::forward<Lambda>(action)(scr,w,h);
+  int done = std::forward<Lambda>(action)(scr,w,h, rgba);
   SDL_Quit();
   return done == 2 ? 1 : 0;
+}
+
+void sdl_to_lodepng(unsigned char* rgba, const SDL_Surface* scr, unsigned w, unsigned h)
+{
+  for (unsigned i=0; i<h; ++i)
+    for (unsigned j=0; j<w; ++j)
+    {
+      int* pixel = ((int*)(scr->pixels))+i*w + j;
+      ((int*)(&rgba[0]))[i*w + j] = (*pixel)|0xff000000;
+    }
 }

@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     {
       //std::cout << "\t"<< std::hex << *((int*)(&image[i*width + 4*j]));
     }
-  show(filename, &image[0], width, height, [](SDL_Surface* scr, unsigned w, unsigned h) -> int {
+  show(filename, &image[0], width, height, [](SDL_Surface* scr, unsigned w, unsigned h, unsigned char* rgba) -> int {
       for (unsigned i=1;i<h-1;++i)
         for (unsigned j=1;j<w-1;++j)
         {
@@ -46,7 +46,17 @@ int main(int argc, char *argv[])
       {
         if(event.type == SDL_QUIT) done = 2;
         else if(SDL_GetKeyState(NULL)[SDLK_ESCAPE]) done = 2;
-        else if(event.type == SDL_KEYDOWN) iterate = true;
+        else if(event.type == SDL_KEYDOWN)
+        {
+          if (event.key.keysym.sym == SDLK_RIGHT)
+            iterate = true;
+          else if (event.key.keysym.sym == SDLK_DOWN)
+          {
+            sdl_to_lodepng(rgba, scr, w, h);
+            const char* filename = "resultimage.png";
+            lodepng::encode(filename, rgba, w, h);
+          }
+        }
       }
       if (iterate)
       {
