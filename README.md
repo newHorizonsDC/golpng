@@ -1,7 +1,6 @@
 # golpng
-simulate game of life with greyscaled / laplace saturated pngs as input
+Supports linux. Instructions for debian jessie:
 
-supports debian based systems
 
 prerequisites:
 
@@ -9,9 +8,9 @@ install tup:
 ```
 ./scripts/getTup.sh
 ```
-install sdl2:
+install sdl:
 ```
-sudo apt-get install libsdl2-dev
+sudo apt-get install libsdl1.2-dev
 ```
 
 build:
@@ -21,7 +20,9 @@ tup
 
 run:
 ```bash
-./build-default/src/run <image.png>
+./build-default/src/pics/run <path-to-image.png>
 ```
 
 while running, press right to apply laplace and saturate, up to start/stop game of life and down to save picture as resultimage.png
+
+![alt text](dependency-graph.png "Dependency graph")

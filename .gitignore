@@ -1,10 +1,7 @@
-*.png
+/pics/
 *.out
 *.swp
 *.swo
-*.h.gch
-*.o
-*.bmp
 .tup/
 build-*/*
 !build-*/tup.config
