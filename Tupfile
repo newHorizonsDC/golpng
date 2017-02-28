@@ -1,0 +1,2 @@
+: foreach *.cpp |> g++ -c -g -std=c++11 %f |> %B.o
+: *.o |> g++ -lSDL %f -o %o |> run
