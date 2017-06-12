@@ -37,8 +37,9 @@ int main(int argc, char *argv[])
       SDL_Event event;
       int done = 0;
       int steps = 0;
-      bool iterate = false;
-      bool gol = false;
+      bool iterate = 0;
+      bool gol = 0;
+      bool once = 0;
       SDL_Surface* nscr;
       nscr = SDL_CreateRGBSurface(0, scr->w, scr->h, 32, 0, 0, 0, 0);
       //nscr->pixels = new unsigned char[scr->w * scr->h * scr->format->BytesPerPixel];
@@ -52,6 +53,7 @@ int main(int argc, char *argv[])
             steps=0;*/
           while(SDL_PollEvent(&event))
           {
+              once = 0;
               if(event.type == SDL_QUIT) done = 2;
               else if(SDL_GetKeyState(NULL)[SDLK_ESCAPE]) done = 2;
               else if(event.type == SDL_KEYDOWN)
@@ -66,6 +68,10 @@ int main(int argc, char *argv[])
                   }
                   else if (event.key.keysym.sym == SDLK_UP)
                       gol = !gol;
+                  else if (event.key.keysym.sym == SDLK_i){
+                      gol = 1;
+                      once = 1;
+                  }
               }
             }
             if (iterate)
@@ -75,7 +81,7 @@ int main(int argc, char *argv[])
                     {
                         //std::cout << "\t"<< std::hex << ((int*)(scr->pixels))[i*w + j];
                         int * pixel = ((int*)(scr->pixels))+i*w + j;
-                        char laplace = 4*((*pixel)&0xff) - (*(pixel-1))&0xff - (*(pixel+1))&0xff - (*(pixel-w))&0xff - (*(pixel+1))&0xff;
+                        char laplace = 4*((*pixel)&0xff) - (*(pixel-1))&0xff - (*(pixel+1))&0xff - (*(pixel-w))&0xff - (*(pixel+w))&0xff;
                         if (laplace < 0) laplace = 0;
                         else if (laplace > 0xff) laplace = 0xff;
 
@@ -89,6 +95,8 @@ int main(int argc, char *argv[])
             }
             else if(gol)
             {
+                if(once)
+                    gol = 0;
                 //nscr = SDL_ConvertSurface(scr, scr->format, 0);
                 memcpy(nscr->pixels, scr->pixels, scr->w*scr->h*scr->format->BytesPerPixel);
                 for (unsigned i=0;i<h;++i){
