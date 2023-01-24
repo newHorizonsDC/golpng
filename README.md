@@ -1,28 +1,28 @@
 # golpng
-Supports linux. Instructions for debian jessie:
+
+Game of life applied on png images with edge detection.
+
+![illustration](golpng.gif)
 
 
-prerequisites:
+## prerequisites:
 
-install tup:
-```
-./scripts/getTup.sh
-```
-install sdl:
-```
-sudo apt-get install libsdl1.2-dev
-```
+tup, sdl1
 
-build:
+## Build
+
 ```bash
 tup
 ```
 
-run:
+## Run
+
 ```bash
 ./build-default/src/pics/run <path-to-image.png>
 ```
 
-while running, press right to apply laplace and saturate, up to start/stop game of life and down to save picture as resultimage.png
+while running, press right to apply edge detection and saturate, up to start/stop game of life and down to save picture as resultimage.png . Press i to only do one iteration of game of life.
 
-![alt text](dependency-graph.png "Dependency graph")
+The edge detection is necessary on photos, but maybe not so much on computer generated images with large areas with the same color.
+
+![dependency graph](dependency-graph.png "Dependency graph")
