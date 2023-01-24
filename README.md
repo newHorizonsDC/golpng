@@ -24,5 +24,3 @@ tup
 while running, press right to apply edge detection and saturate, up to start/stop game of life and down to save picture as resultimage.png . Press i to only do one iteration of game of life.
 
 The edge detection is necessary on photos, but maybe not so much on computer generated images with large areas with the same color.
-
-![dependency graph](dependency-graph.png "Dependency graph")
